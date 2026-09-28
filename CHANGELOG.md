@@ -9,6 +9,14 @@ For guidelines on writing changelog entries see [docs/changelog-guide.md](docs/c
 
 ## [Unreleased]
 
+### Added
+- **#862 [DB-005] Database ping latency and connection state metrics on health endpoint**: Updated `src/routes/health.ts` to measure `SELECT 1` round-trip latency, expose `latency_ms` and `pool: { active, idle, waiting }` in the health response, return HTTP 503 when DB is unavailable or latency exceeds 2000ms, and promote `db.status` to a 3-state model (`healthy` | `degraded` | `unhealthy`).
+- **#863 [INFRA-001] Automated KMS key rotation in Terraform secrets module**: Added customer-managed KMS keys with `enable_key_rotation = true` for all secrets in `terraform/modules/secrets/main.tf`.
+
+### Changed
+- **#861 [DB-004] SQL query dialect compatibility audit between SQLite (test) and PostgreSQL (prod)**: Audited all raw SQL queries in `backend/src/` and `src/services/`. Added dialect audit documentation and CI verification step.
+- **#864 [INFRA-002] Align ECS task CPU and memory reservations with container definitions**: Updated ECS compute modules and variables to eliminate stranded capacity and align container/task CPU and memory definitions.
+
 ---
 
 ## [0.3.0] - 2026-08-28
